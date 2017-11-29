@@ -33,9 +33,9 @@ namespace EE.NumericalMethods.Helpers
                 if (i < N)
                 {
                     var b = A[i + 1, i];
-                    alpha[i+1] = b / (c - alpha[i] + a);
+                    alpha[i+1] = -b / (c + alpha[i] * a);
                 }
-                beta[i+1] = (f + a * beta[i]) / (c - a * alpha[i]);
+                beta[i+1] = (f - a * beta[i]) / (c + a * alpha[i]);
             }
 
             //Обратный ход

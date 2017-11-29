@@ -1,11 +1,13 @@
 ﻿using System;
 using EE.NumericalMethods.Helpers;
 
-namespace EE.NumericalMethods.Methods
+namespace EE.NumericalMethods.ExcerciseOne.Methods
 {
-    public class ImplicitMethod : IMethod
+    public class CrankNicolsonMethod : IMethod
     {
         private static Func<double, double, double> F => (x, t) => Math.Sin(x) + (2 * t) / (t * t + 1);
+
+        public string Name => "Кранк-Николсон";
 
         public void Compute(MathNet net)
         {
@@ -14,18 +16,19 @@ namespace EE.NumericalMethods.Methods
                 var tdmaResult = ComputeTriagonalMatrix(net, j);
                 for (var i = 1; i < net.Width; i++)
                 {
-                    net.Set(i,j, tdmaResult[i]);
+                    net.Set(i, j, tdmaResult[i]);
                 }
             }
         }
 
-        private static double[] ComputeTriagonalMatrix(MathNet net, int j)
+        protected static double[] ComputeTriagonalMatrix(MathNet net, int j)
         {
             //Коэфиценты для построения матрицы
             double a, b, c;
-            a = b = net.D;
-            c = -(net.H * net.H + 2 * net.D);
-            var t = net.D * j;
+            var dh2 = net.D / (2 * net.H * net.H);
+            a = b = -dh2;
+            c = 1 + 2 * dh2;
+            var t = net.D * (j - 1);
 
             //Подготавливаем трехдиагональную матрицу c правыми частями
             var n = net.Width - 1;
@@ -47,12 +50,14 @@ namespace EE.NumericalMethods.Methods
 
                 //Заполняем правую часть
                 var x = (i + 1) * net.H;
-                values[i] = - ((F(x, t) * net.D + net.Get(i + 1, j - 1)) * net.H * net.H);
+                values[i] = F(x, t) * net.D +
+                            net.Get(i + 1, j - 1) +
+                            dh2 * (net.Get(i, j - 1) - 2 * net.Get(i + 1, j - 1) + net.Get(i + 2, j - 1));
             }
 
             //Коректируем с помощью граничных условий
-            values[0] -= net.Get(0, j);
-            values[n - 1] -= net.Get(net.Width, j);
+            values[0] -= net.Get(0, j) * a;
+            values[n - 1] -= net.Get(net.Width, j) * a;
             var tdma = AlgoritmHelper.TridiagonalMatrixAlgoritm(matrix, values);
             //Заполняем граничные условия
             var result = new double[net.Width + 1];

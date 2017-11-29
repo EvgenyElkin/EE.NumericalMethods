@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EE.NumericalMethods.RunnerBuilders
+namespace EE.NumericalMethods.ExcerciseOne.RunnerBuilders
 {
     /// <summary>
     /// Класс, позволяет сконструировать объект запускающий эксперименты

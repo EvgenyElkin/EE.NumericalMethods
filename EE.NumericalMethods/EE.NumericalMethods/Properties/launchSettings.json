@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "ex1 Implicit": {
+      "commandName": "Project",
+      "commandLineArgs": "ex-1 -m Implicit"
+    },
+    "ex1 Explicit": {
+      "commandName": "Project",
+      "commandLineArgs": "ex-1 -m Explicit"
+    },
+    "ex1 CrankNicolson": {
+      "commandName": "Project",
+      "commandLineArgs": "ex-1 -m CrankNicolson"
+    }
+  }
+}

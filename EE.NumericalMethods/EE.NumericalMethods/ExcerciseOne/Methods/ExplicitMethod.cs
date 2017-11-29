@@ -1,10 +1,12 @@
 ﻿using System;
 
-namespace EE.NumericalMethods.Methods
+namespace EE.NumericalMethods.ExcerciseOne.Methods
 {
     public class ExplicitMethod : IMethod
     {
         private static Func<double,double,double> F => (x,t) => Math.Sin(x) + (2 * t) / (t * t + 1);
+
+        public string Name => "Явный";
 
         public void Compute(MathNet net)
         {
