@@ -1,6 +1,8 @@
 ﻿using System;
+using EE.NumericalMethods.Core.ExcerciseOne.Builders;
+using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
 
-namespace EE.NumericalMethods.ExcerciseOne.Methods
+namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 {
     public class ExplicitMethod : IMethod
     {

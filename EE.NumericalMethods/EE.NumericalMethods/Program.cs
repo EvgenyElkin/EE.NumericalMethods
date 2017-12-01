@@ -1,8 +1,9 @@
 ﻿using System;
 using CommandLine;
-using EE.NumericalMethods.Common;
-using EE.NumericalMethods.ExcerciseOne;
-using EE.NumericalMethods.ExcerciseTwo;
+using EE.NumericalMethods.Core.Common;
+using EE.NumericalMethods.Core.ExcerciseOne;
+using EE.NumericalMethods.Core.ExcerciseTwo;
+using EE.NumericalMethods.Options;
 
 namespace EE.NumericalMethods
 {
@@ -15,12 +16,14 @@ namespace EE.NumericalMethods
         {
             try
             {
+                //Разбор входных параметров и определения выполняемого блока
                 var experiment = Parser.Default.ParseArguments<ExcerciseOneOptions, ExcerciseTwoOptions>(args)
                     .MapResult(
                         (ExcerciseOneOptions opt) => new ExcerciseOneExperiment(opt),
                         (ExcerciseTwoOptions opt) => new ExcerciseTwoExperiment(opt),
                         errors => (IExperiment)null);
 
+                //Запуск приложения
                 experiment?.Run();
             }
             catch (Exception ex)
@@ -31,7 +34,7 @@ namespace EE.NumericalMethods
                 Console.ResetColor();
             }
             
-            Console.WriteLine("Нажимите клавишу что бы продолжить...");
+            Console.WriteLine("Нажимите клавишу чтобы продолжить...");
             Console.ReadKey();
         }
     }

@@ -9,4 +9,8 @@
     <PackageReference Include="CommandLineParser.Unofficial.CoreBeta" Version="2.1.0-beta" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EE.NumericalMethods.Core\EE.NumericalMethods.Core.csproj" />
+  </ItemGroup>
+
 </Project>

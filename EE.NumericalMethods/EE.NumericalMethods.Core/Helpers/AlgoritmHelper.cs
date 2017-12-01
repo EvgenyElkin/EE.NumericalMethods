@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace EE.NumericalMethods.Helpers
+namespace EE.NumericalMethods.Core.Helpers
 {
     public static class AlgoritmHelper
     {

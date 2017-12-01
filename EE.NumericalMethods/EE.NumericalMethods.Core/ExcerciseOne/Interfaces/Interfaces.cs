@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using EE.NumericalMethods.Core.ExcerciseOne.Builders;
 
-namespace EE.NumericalMethods.ExcerciseOne.RunnerBuilders
+namespace EE.NumericalMethods.Core.ExcerciseOne.Interfaces
 {
     public interface IEmptyBuilder
     {

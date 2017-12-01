@@ -1,13 +1,15 @@
 ﻿using System;
-using EE.NumericalMethods.Helpers;
+using EE.NumericalMethods.Core.ExcerciseOne.Builders;
+using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
+using EE.NumericalMethods.Core.Helpers;
 
-namespace EE.NumericalMethods.ExcerciseOne.Methods
+namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 {
-    public class CrankNicolsonMethod : IMethod
+    public class ImplicitMethod : IMethod
     {
         private static Func<double, double, double> F => (x, t) => Math.Sin(x) + (2 * t) / (t * t + 1);
 
-        public string Name => "Кранк-Николсон";
+        public string Name => "Неявный";
 
         public void Compute(MathNet net)
         {
@@ -25,9 +27,8 @@ namespace EE.NumericalMethods.ExcerciseOne.Methods
         {
             //Коэфиценты для построения матрицы
             double a, b, c;
-            var dh2 = net.D / (2 * net.H * net.H);
-            a = b = -dh2;
-            c = 1 + 2 * dh2;
+            a = b = net.D;
+            c = -(net.H * net.H + 2 * net.D);
             var t = net.D * (j - 1);
 
             //Подготавливаем трехдиагональную матрицу c правыми частями
@@ -50,9 +51,7 @@ namespace EE.NumericalMethods.ExcerciseOne.Methods
 
                 //Заполняем правую часть
                 var x = (i + 1) * net.H;
-                values[i] = F(x, t) * net.D +
-                            net.Get(i + 1, j - 1) +
-                            dh2 * (net.Get(i, j - 1) - 2 * net.Get(i + 1, j - 1) + net.Get(i + 2, j - 1));
+                values[i] = -((F(x, t) * net.D + net.Get(i + 1, j - 1)) * net.H * net.H);
             }
 
             //Коректируем с помощью граничных условий

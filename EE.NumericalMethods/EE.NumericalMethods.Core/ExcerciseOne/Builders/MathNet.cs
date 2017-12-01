@@ -1,4 +1,4 @@
-﻿namespace EE.NumericalMethods.ExcerciseOne
+﻿namespace EE.NumericalMethods.Core.ExcerciseOne.Builders
 {
     public class MathNet
     {

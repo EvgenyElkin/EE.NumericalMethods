@@ -1,13 +1,13 @@
 ﻿using System;
-using EE.NumericalMethods.Common;
+using EE.NumericalMethods.Core.Common;
 
-namespace EE.NumericalMethods.ExcerciseTwo
+namespace EE.NumericalMethods.Core.ExcerciseTwo
 {
     public class ExcerciseTwoExperiment : IExperiment
     {
-        private readonly ExcerciseTwoOptions _options;
+        private readonly IExcerciseTwoOptions _options;
 
-        public ExcerciseTwoExperiment(ExcerciseTwoOptions options)
+        public ExcerciseTwoExperiment(IExcerciseTwoOptions options)
         {
             _options = options;
         }
