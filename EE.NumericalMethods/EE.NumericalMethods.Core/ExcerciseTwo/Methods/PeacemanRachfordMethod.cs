@@ -48,46 +48,34 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
             var a = -dh2 / 2;
             var b = 1 + dh2;
             var c = a;
+            var aj = dh2 / 2;
+            var bj = 1 - dh2;
+            var cj = aj;
 
             double Fj(int j)
             {
-                var aj = dh2 / 2;
-                var bj = 1 - dh2;
-                var cj = aj;
                 return aj * net.Get(i, j - 1, k - 1) + bj * net.Get(i, j, k - 1) + cj * net.Get(i, j + 1, k - 1) +
                        net.D / 2 * _function(i * net.H, (j - 1) * net.H, (k - 0.5) * net.D);
             }
 
-            var n = net.SizeY - 1;
+            var n = net.SizeY + 1;
             var matrix = new double[n, n];
             var values = new double[n];
 
-            for (var j = 0; j < n; j++)
+            matrix[0, 0] = 1;
+            values[0] = net.Get(i, 0, k);
+            for (var j = 1; j < n - 1; j++)
             {
-                //Заполняем матрицу
-                if (j > 0)
-                {
-                    matrix[j - 1, j] = a;
-                }
+                matrix[j - 1, j] = a;
                 matrix[j, j] = b;
-                if (j < n - 1)
-                {
-                    matrix[j + 1, j] = c;
-                }
-
-                //Заполняем правую часть
-                values[j] = Fj(j + 1);
+                matrix[j + 1, j] = c;
+                values[j] = Fj(j);
             }
 
-            //Коректируем с помощью граничных условий
-            values[0] -= net.Get(i, 0, k) * a;
-            values[n - 1] -= net.Get(i, net.SizeY, k) * c;
-            //Запускаем прогонку на N-1xN-1 матрице
-            var tdma = AlgoritmContext.Current.TridiagonalMatrixAlgoritm(matrix, values);
-            //Формируем результатирующую строку матрицы
-            var result = new double[net.SizeY + 1];
-            for (var j = 0; j < tdma.Length; j++) result[j+1] = tdma[j];
-            return result;
+            matrix[n - 1, n - 1] = 1;
+            values[n - 1] = net.Get(i, net.SizeY, k);
+
+            return AlgoritmContext.Current.TridiagonalMatrixAlgoritm(matrix, values);
         }
 
         private double[] ComputeRow(IMathNet3 net, int j, int k)
@@ -96,45 +84,34 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
             var a = -dh2 / 2;
             var b = 1 + dh2;
             var c = a;
+            var ai = dh2 / 2;
+            var bi = 1 - dh2;
+            var ci = ai;
 
-            double Fij(int i)
+            double Fi(int i)
             {
-                var ai = dh2 / 2;
-                var bi = 1 - dh2;
-                var ci = ai;
                 return ai * net.Get(i - 1, j, k) + bi * net.Get(i, j, k) + ci * net.Get(i + 1, j, k) +
-                       net.D / 2 * _function((i - 1) * net.H, j * net.H, (k - 0.5) * net.D);
+                       net.D / 2 * _function(i * net.H, j * net.H, (k - 0.5) * net.D);
             }
             
-            var n = net.SizeX - 1;
+            var n = net.SizeX + 1;
             var matrix = new double[n, n];
             var values = new double[n];
 
-            for (var i = 0; i < n; i++)
+            matrix[0, 0] = 1;
+            values[0] = net.Get(0, j, k);
+            for (var i = 1; i < n-1; i++)
             {
-                //Заполняем матрицу
-                if (i > 0)
-                {
-                    matrix[i - 1, i] = a;
-                }
+                matrix[i - 1, i] = a;
                 matrix[i, i] = b;
-                if (i < n - 1)
-                {
-                    matrix[i + 1, i] = c;
-                }
-
-                //Заполняем правую часть
-                values[i] = Fij(i + 1);
+                matrix[i + 1, i] = c;
+                values[i] = Fi(i);
             }
 
-            values[0] -= net.Get(0, j, k) * a;
-            values[n - 1] -= net.Get(net.SizeX, j, k) * c;
+            matrix[n - 1, n - 1] = 1;
+            values[n - 1] = net.Get(net.SizeX, j, k);
 
-            var tdma = AlgoritmContext.Current.TridiagonalMatrixAlgoritm(matrix, values);
-            //Формируем результатирующую строку матрицы
-            var result = new double[net.SizeX + 1];
-            for (var i = 0; i < tdma.Length; i++) result[i + 1] = tdma[i];
-            return result;
+            return AlgoritmContext.Current.TridiagonalMatrixAlgoritm(matrix, values);
         }
     }
 }

@@ -12,7 +12,7 @@
       "commandName": "Project",
       "commandLineArgs": "ex-1 -m CrankNicolson"
     },
-    "ex2 Pismen-Rokford": {
+    "ex-2 Peaceman-Rachford": {
       "commandName": "Project",
       "commandLineArgs": "ex-2"
     }
