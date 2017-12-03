@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using CommandLine;
 using EE.NumericalMethods.Core.Common;
 using EE.NumericalMethods.Core.ExcerciseOne;
@@ -26,7 +27,7 @@ namespace EE.NumericalMethods
                 //Запуск приложения
                 experiment?.Run();
             }
-            catch (Exception ex)
+            catch (HttpListenerException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Произошла ошибка:");

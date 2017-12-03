@@ -2,6 +2,6 @@
 {
     public interface IAlgoritmContext
     {
-        double[] TridiagonalMatrixAlgoritm(double[,] b, double[] a);
+        double[] TridiagonalMatrixAlgoritm(double[,] a, double[] b);
     }
 }

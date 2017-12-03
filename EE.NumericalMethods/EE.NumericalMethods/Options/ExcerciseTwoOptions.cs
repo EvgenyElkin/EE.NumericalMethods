@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using EE.NumericalMethods.Core.ExcerciseTwo;
+using EE.NumericalMethods.Core.ExcerciseTwo.Interfaces;
 
 namespace EE.NumericalMethods.Options
 {

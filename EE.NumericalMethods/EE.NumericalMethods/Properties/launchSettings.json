@@ -11,6 +11,10 @@
     "ex1 CrankNicolson": {
       "commandName": "Project",
       "commandLineArgs": "ex-1 -m CrankNicolson"
+    },
+    "ex2 Pismen-Rokford": {
+      "commandName": "Project",
+      "commandLineArgs": "ex-2"
     }
   }
 }
