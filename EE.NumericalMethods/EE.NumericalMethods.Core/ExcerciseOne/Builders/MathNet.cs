@@ -46,7 +46,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Builders
             MaxX = maxX;
             MaxT = maxT;
             H = h;
-            D = d;
+            D = d / 2;
             Width = (int)(maxX / h);
             Height = (int)(maxT / d);
             Net = new double[Width + 1, Height + 1];

@@ -55,7 +55,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
             double Fj(int j)
             {
                 return aj * net.Get(i, j - 1, k - 1) + bj * net.Get(i, j, k - 1) + cj * net.Get(i, j + 1, k - 1) +
-                       net.D / 2 * _function(i * net.H, (j - 1) * net.H, (k - 0.5) * net.D);
+                       net.D / 2 * _function(i * net.H, j * net.H, (k - 0.5) * net.D);
             }
 
             var n = net.SizeY + 1;
