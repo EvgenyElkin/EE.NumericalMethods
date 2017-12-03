@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EE.NumericalMethods.Tests.Helpers
+namespace EE.NumericalMethods.Tests.Comparers
 {
     /// <summary>
     /// Определяет равенство с определенной точностью

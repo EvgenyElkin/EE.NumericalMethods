@@ -4,13 +4,15 @@ using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
 
 namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 {
-    public class ExplicitMethod : IMethod
+    public class ExplicitMethod : MethodBase
     {
-        private static Func<double,double,double> F => (x,t) => Math.Sin(x) + (2 * t) / (t * t + 1);
+        public ExplicitMethod(Func<double, double, double> function) : base(function)
+        {
+        }
+        
+        public override string Name => "Явный";
 
-        public string Name => "Явный";
-
-        public void Compute(MathNet net)
+        public override void Compute(IMathNet net)
         {
             for (var j = 1; j <= net.Height; j++)
             {
@@ -20,7 +22,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
                     var t = net.D * (j - 1);
                     var value = net.Get(i, j - 1) + net.D *
                                 ((net.Get(i + 1, j - 1) - 2 * net.Get(i, j - 1) + net.Get(i - 1, j - 1)) 
-                                 / (net.H * net.H) + F(x, t));
+                                 / (net.H * net.H) + Function(x, t));
 
                     net.Set(i,j, value);
                 }

@@ -16,8 +16,4 @@
     <ProjectReference Include="..\EE.NumericalMethods.Core\EE.NumericalMethods.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Comparers\" />
-  </ItemGroup>
-
 </Project>

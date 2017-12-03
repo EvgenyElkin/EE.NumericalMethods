@@ -1,6 +1,8 @@
-﻿namespace EE.NumericalMethods.Core.ExcerciseOne.Builders
+﻿using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
+
+namespace EE.NumericalMethods.Core.ExcerciseOne.Builders
 {
-    public class MathNet
+    public class MathNet : IMathNet
     {
         /// <summary>
         /// Максимальное значение по пространству
@@ -20,7 +22,7 @@
         public double D { get; }
 
         //Внутреннее поле с сеткой
-        private readonly double[,] _net;
+        public readonly double[,] Net;
 
         /// <summary>
         /// Размер сетки по пространству
@@ -47,7 +49,7 @@
             D = d;
             Width = (int)(maxX / h);
             Height = (int)(maxT / d);
-            _net = new double[Width + 1, Height + 1];
+            Net = new double[Width + 1, Height + 1];
         }
 
         /// <summary>
@@ -58,7 +60,7 @@
         /// <param name="value">Значение</param>
         public void Set(int i, int j, double value)
         {
-            _net[i, j] = value;
+            Net[i, j] = value;
         }
 
         /// <summary>
@@ -69,7 +71,7 @@
         /// <returns>Значение сетки в i,j</returns>
         public double Get(int i, int j)
         {
-            return _net[i, j];
+            return Net[i, j];
         }
     }
 }

@@ -5,13 +5,15 @@ using EE.NumericalMethods.Core.Helpers;
 
 namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 {
-    public class CrankNicolsonMethod : IMethod
+    public class CrankNicolsonMethod : MethodBase
     {
-        private static Func<double, double, double> F => (x, t) => Math.Sin(x) + (2 * t) / (t * t + 1);
+        public CrankNicolsonMethod(Func<double, double, double> function) : base(function)
+        {
+        }
 
-        public string Name => "Кранк-Николсон";
+        public override string Name => "Кранк-Николсон";
 
-        public void Compute(MathNet net)
+        public override void Compute(IMathNet net)
         {
             for (var j = 1; j <= net.Height; j++)
             {
@@ -23,7 +25,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
             }
         }
 
-        protected static double[] ComputeTriagonalMatrix(MathNet net, int j)
+        protected double[] ComputeTriagonalMatrix(IMathNet net, int j)
         {
             //Коэфиценты для построения матрицы
             double a, b, c;
@@ -52,7 +54,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 
                 //Заполняем правую часть
                 var x = (i + 1) * net.H;
-                values[i] = F(x, t) * net.D +
+                values[i] = Function(x, t) * net.D +
                             net.Get(i + 1, j - 1) +
                             dh2 * (net.Get(i, j - 1) - 2 * net.Get(i + 1, j - 1) + net.Get(i + 2, j - 1));
             }
@@ -60,7 +62,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
             //Коректируем с помощью граничных условий
             values[0] -= net.Get(0, j) * a;
             values[n - 1] -= net.Get(net.Width, j) * a;
-            var tdma = AlgoritmHelper.TridiagonalMatrixAlgoritm(matrix, values);
+            var tdma = AlgoritmContext.Current.TridiagonalMatrixAlgoritm(matrix, values);
             //Заполняем граничные условия
             var result = new double[net.Width + 1];
             result[0] = net.Get(0, j);

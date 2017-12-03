@@ -2,8 +2,19 @@
 
 namespace EE.NumericalMethods.Core.Helpers
 {
-    public static class AlgoritmHelper
+    /// <summary>
+    /// Контекст для выполнения различных алгоритмов
+    /// </summary>
+    public class AlgoritmContext : IAlgoritmContext
     {
+        public static IAlgoritmContext Current => _context;
+
+        private static IAlgoritmContext _context = new AlgoritmContext();
+
+        public static void SetContext(IAlgoritmContext context)
+        {
+            _context = context;
+        }
 
         /// <summary>
         /// Трехдиагональная прогонка
@@ -12,7 +23,7 @@ namespace EE.NumericalMethods.Core.Helpers
         /// <param name="B">Правая часть</param>
         /// <returns>Решение</returns>
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public static double[] TridiagonalMatrixAlgoritm(double[,] A, double[] B)
+        public double[] TridiagonalMatrixAlgoritm(double[,] A, double[] B)
         {
             var N = B.Length - 1;
             var n = B.Length;

@@ -1,6 +1,4 @@
-﻿using EE.NumericalMethods.Core.ExcerciseOne.Builders;
-
-namespace EE.NumericalMethods.Core.ExcerciseOne.Interfaces
+﻿namespace EE.NumericalMethods.Core.ExcerciseOne.Interfaces
 {
     public interface IMethod
     {
@@ -13,6 +11,6 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Interfaces
         /// Функция вычисляющая значения на сетке
         /// </summary>
         /// <param name="net">Сетка</param>
-        void Compute(MathNet net);
+        void Compute(IMathNet net);
     }
 }

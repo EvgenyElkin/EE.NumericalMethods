@@ -5,13 +5,15 @@ using EE.NumericalMethods.Core.Helpers;
 
 namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 {
-    public class ImplicitMethod : IMethod
+    public class ImplicitMethod : MethodBase
     {
-        private static Func<double, double, double> F => (x, t) => Math.Sin(x) + (2 * t) / (t * t + 1);
+        public ImplicitMethod(Func<double, double, double> function) : base(function)
+        {
+        }
 
-        public string Name => "Неявный";
+        public override string Name => "Неявный";
 
-        public void Compute(MathNet net)
+        public override void Compute(IMathNet net)
         {
             for (var j = 1; j <= net.Height; j++)
             {
@@ -23,7 +25,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
             }
         }
 
-        protected static double[] ComputeTriagonalMatrix(MathNet net, int j)
+        public double[] ComputeTriagonalMatrix(IMathNet net, int j)
         {
             //Коэфиценты для построения матрицы
             double a, b, c;
@@ -51,13 +53,13 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 
                 //Заполняем правую часть
                 var x = (i + 1) * net.H;
-                values[i] = -((F(x, t) * net.D + net.Get(i + 1, j - 1)) * net.H * net.H);
+                values[i] = -((Function(x, t) * net.D + net.Get(i + 1, j - 1)) * net.H * net.H);
             }
 
             //Коректируем с помощью граничных условий
             values[0] -= net.Get(0, j) * a;
             values[n - 1] -= net.Get(net.Width, j) * a;
-            var tdma = AlgoritmHelper.TridiagonalMatrixAlgoritm(matrix, values);
+            var tdma = AlgoritmContext.Current.TridiagonalMatrixAlgoritm(matrix, values);
             //Заполняем граничные условия
             var result = new double[net.Width + 1];
             result[0] = net.Get(0, j);

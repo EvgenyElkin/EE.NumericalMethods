@@ -44,7 +44,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne
                 .Build();
 
             //Получаем класс с логикой метода для вычисления
-            var method = GetMethod(_options.MethodType);
+            var method = GetMethod(_options.MethodType, (x, t) => Math.Sin(x) + (2 * t) / (t * t + 1));
 
             //Вывод данных
             Console.ForegroundColor = ConsoleColor.Green;
@@ -65,18 +65,19 @@ namespace EE.NumericalMethods.Core.ExcerciseOne
         /// <summary>
         /// Фабричный метод для получения метода
         /// </summary>
-        /// <param name="methodType"></param>
+        /// <param name="methodType">Метод</param>
+        /// <param name="func">Правая часть</param>
         /// <returns></returns>
-        private IMethod GetMethod(MethodTypes methodType)
+        private IMethod GetMethod(MethodTypes methodType, Func<double,double, double> func)
         {
             switch (methodType)
             {
                 case MethodTypes.Explicit:
-                    return new ExplicitMethod();
+                    return new ExplicitMethod(func);
                 case MethodTypes.Implicit:
-                    return new ImplicitMethod();
+                    return new ImplicitMethod(func);
                 case MethodTypes.CrankNicolson:
-                    return new CrankNicolsonMethod();
+                    return new CrankNicolsonMethod(func);
                 default:
                     throw new NotSupportedException($"Метод {methodType} не поддерживается");
             }

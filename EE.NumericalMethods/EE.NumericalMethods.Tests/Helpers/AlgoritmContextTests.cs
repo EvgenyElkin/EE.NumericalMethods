@@ -1,12 +1,13 @@
 ﻿using EE.NumericalMethods.Core.Helpers;
+using EE.NumericalMethods.Tests.Comparers;
 using Xunit;
 
 namespace EE.NumericalMethods.Tests.Helpers
 {
-    public class AlgoritmHelperTests
+    public class AlgoritmContextTests
     {
         [Fact]
-        public void TridiagonalMatrixAlgoritm_Success()
+        public void TridiagonalMatrixAlgoritm_Success_Test()
         {
             //4x1 + 3x2 = 4;
             //x1 + 2x2 - x3 = 2;
@@ -26,7 +27,7 @@ namespace EE.NumericalMethods.Tests.Helpers
             var b = new double[] {-25, 72, -69, -156, 20};
 
             //Act
-            var result = AlgoritmHelper.TridiagonalMatrixAlgoritm(a, b);
+            var result = AlgoritmContext.Current.TridiagonalMatrixAlgoritm(a, b);
 
             var expected = new[] {-10, 4.999999, -2.00081, -10.001042, -3};
             //Assert
