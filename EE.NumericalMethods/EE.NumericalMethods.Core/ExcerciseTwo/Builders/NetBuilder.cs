@@ -70,7 +70,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Builders
                 for (var j = 0; j <= net.SizeY; j++)
                 for (var i = 0; i <= net.SizeX; i++)
                 {
-                    var initialValue = _initialCondition(i * net.H, j);
+                    var initialValue = _initialCondition(i * net.H, j * net.H);
                     net.Set(i, j, 0, initialValue);
                 }
                 //Заполняем узлы на границах, при x = 0, x = T

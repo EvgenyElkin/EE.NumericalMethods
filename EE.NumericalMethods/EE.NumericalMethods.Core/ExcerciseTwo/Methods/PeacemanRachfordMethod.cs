@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Drawing;
 using EE.NumericalMethods.Core.ExcerciseTwo.Interfaces;
 using EE.NumericalMethods.Core.Helpers;
 using IMethod = EE.NumericalMethods.Core.ExcerciseTwo.Interfaces.IMethod;
 
 namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
 {
-    public class PismenRekfordMethod : IMethod
+    public class PeacemanRachfordMethod : IMethod
     {
         private readonly Func<double, double, double, double> _function;
 
-        public PismenRekfordMethod(Func<double, double, double, double> function)
+        public PeacemanRachfordMethod(Func<double, double, double, double> function)
         {
             _function = function;
         }
@@ -25,25 +24,25 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
                 //Делаем N-1 прогонку по X
                 for (var i = 1; i < net.SizeX; i++)
                 {
-                    var row = ComputeRow(net, i, k);
+                    var column = ComputeColumn(net, i, k);
                     for (var j = 1; j < net.SizeY; j++)
                     {
-                        net.Set(i, j, k, row[j]);
+                        net.Set(i, j, k, column[j]);
                     }
                 }
-                //Делаем N-1 прогонку по Y
+                ////Делаем N-1 прогонку по Y
                 for (var j = 1; j < net.SizeY; j++)
                 {
-                    var column = ComputeColumn(net, j, k);
+                    var row = ComputeRow(net, j, k);
                     for (var i = 1; i < net.SizeX; i++)
                     {
-                        net.Set(i, j, k, column[j]);
+                        net.Set(i, j, k, row[i]);
                     }
                 }
             }
         }
 
-        private double[] ComputeRow(IMathNet3 net, int i, int k)
+        private double[] ComputeColumn(IMathNet3 net, int i, int k)
         {
             var dh2 = net.D / (net.H * net.H);
             var a = -dh2 / 2;
@@ -56,7 +55,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
                 var bj = 1 - dh2;
                 var cj = aj;
                 return aj * net.Get(i, j - 1, k - 1) + bj * net.Get(i, j, k - 1) + cj * net.Get(i, j + 1, k - 1) +
-                       net.D / 2 * _function(i * net.H, j * net.H, (k - 0.5) * net.D);
+                       net.D / 2 * _function(i * net.H, (j - 1) * net.H, (k - 0.5) * net.D);
             }
 
             var n = net.SizeY - 1;
@@ -70,10 +69,10 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
                 {
                     matrix[j - 1, j] = a;
                 }
-                matrix[j, j] = c;
+                matrix[j, j] = b;
                 if (j < n - 1)
                 {
-                    matrix[j + 1, j] = b;
+                    matrix[j + 1, j] = c;
                 }
 
                 //Заполняем правую часть
@@ -91,7 +90,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
             return result;
         }
 
-        private double[] ComputeColumn(IMathNet3 net, int j, int k)
+        private double[] ComputeRow(IMathNet3 net, int j, int k)
         {
             var dh2 = net.D / (net.H * net.H);
             var a = dh2 / 2;
@@ -100,11 +99,11 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
 
             double Fij(int i)
             {
-                var ai = -dh2 / 2;
-                var bi = 1 + dh2;
+                var ai = dh2 / 2;
+                var bi = 1 - dh2;
                 var ci = ai;
                 return ai * net.Get(i - 1, j, k) + bi * net.Get(i, j, k) + ci * net.Get(i + 1, j, k) +
-                       net.D / 2 * _function(i * net.H, j * net.H, (k - 0.5) * net.D);
+                       net.D / 2 * _function((i - 1) * net.H, j * net.H, (k - 0.5) * net.D);
             }
             
             var n = net.SizeX - 1;
@@ -118,10 +117,10 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
                 {
                     matrix[i - 1, i] = a;
                 }
-                matrix[i, i] = c;
+                matrix[i, i] = b;
                 if (i < n - 1)
                 {
-                    matrix[i + 1, i] = b;
+                    matrix[i + 1, i] = c;
                 }
 
                 //Заполняем правую часть

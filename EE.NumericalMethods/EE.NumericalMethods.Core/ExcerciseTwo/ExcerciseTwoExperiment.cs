@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using EE.NumericalMethods.Core.Common;
 using EE.NumericalMethods.Core.ExcerciseTwo.Builders;
 using EE.NumericalMethods.Core.ExcerciseTwo.Interfaces;
@@ -19,19 +21,21 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo
         {
             //Получаем сетки с задаными параметрами
             var nets = NetBuilder.Create()
-                .SetArea(2 * Math.PI, 2*Math.PI, 10)
+                .SetArea(2 * Math.PI, 2 * Math.PI, 10)
                 .SetInitialCondition((x, y) => Math.Sin(x + y))
-                .SetBorder((x, t) => Math.Sin(x) + Math.Log(t * t + 1), (y,t) => Math.Sin(y) + Math.Log(t * t + 1))
-                .WithNet(Math.PI / 5, 0.25)
+                .SetBorder((x, t) => Math.Sin(x) + Math.Log(t * t + 1), (y, t) => Math.Sin(y) + Math.Log(t * t + 1))
                 .WithNet(Math.PI / 10, 0.25)
                 .WithNet(Math.PI / 5, 0.125)
                 .WithNet(Math.PI / 5, 0.0625)
                 .WithNet(Math.PI / 10, 0.125)
-                .WithNet(Math.PI / 20, 0.0625)
+                .WithNet(Math.PI / 20, Math.Pow(2, -4))
+                .WithNet(Math.PI / 40, Math.Pow(2, -5))
+                .WithNet(Math.PI / 80, Math.Pow(2, -6))
+                .WithNet(Math.PI / 160, Math.Pow(2, -7))
                 .Build();
 
             //Получаем класс с логикой метода для вычисления
-            var method = new PismenRekfordMethod((x,y,t) => 2 * Math.Sin(x + y) + 2*t/(t*t+1));
+            var method = new PeacemanRachfordMethod((x,y,t) => 2 * Math.Sin(x + y) + 2*t/(t*t+1));
 
             //Вывод данных
             Console.ForegroundColor = ConsoleColor.Green;
@@ -64,7 +68,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo
             {
                 var x = net.H * i;
                 var y = net.H * j;
-                var t = net.D * j;
+                var t = net.D * k;
                 var error = Math.Abs(expected(x, y, t) - net.Get(i, j, k));
                 if (error > result)
                 {
