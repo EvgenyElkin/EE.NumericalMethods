@@ -93,8 +93,8 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
         private double[] ComputeRow(IMathNet3 net, int j, int k)
         {
             var dh2 = net.D / (net.H * net.H);
-            var a = dh2 / 2;
-            var b = 1 - dh2;
+            var a = -dh2 / 2;
+            var b = 1 + dh2;
             var c = a;
 
             double Fij(int i)

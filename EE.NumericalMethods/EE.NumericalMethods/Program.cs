@@ -27,7 +27,7 @@ namespace EE.NumericalMethods
                 //Запуск приложения
                 experiment?.Run();
             }
-            catch (HttpListenerException ex)
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Произошла ошибка:");

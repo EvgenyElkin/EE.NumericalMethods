@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using EE.NumericalMethods.Core.Common;
 using EE.NumericalMethods.Core.ExcerciseTwo.Builders;
 using EE.NumericalMethods.Core.ExcerciseTwo.Interfaces;
@@ -24,7 +22,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo
                 .SetArea(2 * Math.PI, 2 * Math.PI, 10)
                 .SetInitialCondition((x, y) => Math.Sin(x + y))
                 .SetBorder((x, t) => Math.Sin(x) + Math.Log(t * t + 1), (y, t) => Math.Sin(y) + Math.Log(t * t + 1))
-                .WithNet(Math.PI / 10, 0.25)
+                .WithNet(Math.PI / 5, 0.25)
                 .WithNet(Math.PI / 5, 0.125)
                 .WithNet(Math.PI / 5, 0.0625)
                 .WithNet(Math.PI / 10, 0.125)
