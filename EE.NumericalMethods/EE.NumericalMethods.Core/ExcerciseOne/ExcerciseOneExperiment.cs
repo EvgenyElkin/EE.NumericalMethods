@@ -1,6 +1,6 @@
 ﻿using System;
 using EE.NumericalMethods.Core.Common;
-using EE.NumericalMethods.Core.ExcerciseOne.Builders;
+using EE.NumericalMethods.Core.Common.Builders.MathNet2;
 using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
 using EE.NumericalMethods.Core.ExcerciseOne.Methods;
 
@@ -12,17 +12,17 @@ namespace EE.NumericalMethods.Core.ExcerciseOne
     public class ExcerciseOneExperiment : IExperiment
     {
         /// <summary>
-        /// Параметры
+        /// Мотод
         /// </summary>
-        private readonly IExcerciseOneOptions _options;
+        private readonly MethodTypes _method;
 
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="options">Параметры запуска</param>
-        public ExcerciseOneExperiment(IExcerciseOneOptions options)
+        /// <param name="method">Метод вычисления</param>
+        public ExcerciseOneExperiment(MethodTypes method)
         {
-            _options = options;
+            _method = method;
         }
         
         /// <summary>
@@ -31,20 +31,22 @@ namespace EE.NumericalMethods.Core.ExcerciseOne
         public void Run()
         {
             //Получаем сетки с задаными параметрами
-            var nets = NetBuilder.Create()
+            var nets = MathNet2Builder.Create()
                 .SetArea(Math.PI, 10)
                 .SetInitialCondition(Math.Sin)
                 .SetBorder(t => Math.Log(t * t + 1), t => Math.Log(t * t + 1))
-                .WithNet(Math.PI / 5, 0.25)
-                .WithNet(Math.PI / 10, 0.25)
-                .WithNet(Math.PI / 5, 0.125)
-                .WithNet(Math.PI / 5, 0.0625)
-                .WithNet(Math.PI / 10, 0.125)
-                .WithNet(Math.PI / 20, 0.0625)
+                .WithNet(Math.PI / 5 , Math.Pow(2,-2))
+                .WithNet(Math.PI / 10, Math.Pow(2,-2))
+                .WithNet(Math.PI / 5 , Math.Pow(2,-3))
+                .WithNet(Math.PI / 5 , Math.Pow(2,-4))
+                .WithNet(Math.PI / 10, Math.Pow(2,-3))
+                .WithNet(Math.PI / 20, Math.Pow(2,-4))
+                .WithNet(Math.PI / 40, Math.Pow(2,-5))
+                .WithNet(Math.PI / 80, Math.Pow(2,-6))
                 .Build();
 
             //Получаем класс с логикой метода для вычисления
-            var method = GetMethod(_options.MethodType, (x, t) => Math.Sin(x) + (2 * t) / (t * t + 1));
+            var method = GetMethod(_method, (x, t) => Math.Sin(x) + (2 * t) / (t * t + 1));
 
             //Вывод данных
             Console.ForegroundColor = ConsoleColor.Green;
@@ -56,7 +58,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne
                 //Вычисляем функцию на сетке, с помощью метода
                 method.Compute(net);
                 //Вычисляем ошибку, как максимум разности функций на точках сетки
-                var error = GetError(net, (x, t) => Math.Sin(x) + Math.Log(t * t + 1));
+                var error = net.GetError((x, t) => Math.Sin(x) + Math.Log(t * t + 1));
 
                 Console.WriteLine("({0};{1})={2:g4}", net.Width, net.Height, error);
             }
@@ -68,7 +70,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne
         /// <param name="methodType">Метод</param>
         /// <param name="func">Правая часть</param>
         /// <returns></returns>
-        private IMethod GetMethod(MethodTypes methodType, Func<double,double, double> func)
+        private MethodBase GetMethod(MethodTypes methodType, Func<double,double, double> func)
         {
             switch (methodType)
             {
@@ -81,31 +83,6 @@ namespace EE.NumericalMethods.Core.ExcerciseOne
                 default:
                     throw new NotSupportedException($"Метод {methodType} не поддерживается");
             }
-        }
-
-        /// <summary>
-        /// Функция вычисления ошибки
-        /// </summary>
-        /// <param name="net">Сетка</param>
-        /// <param name="expected">Реальное значение</param>
-        /// <returns></returns>
-        public static double GetError(MathNet net, Func<double, double, double> expected)
-        {
-            var result = 0d;
-            for (var j = 0; j <= net.Height; j++)
-            {
-                for (var i = 0; i <= net.Width; i++)
-                {
-                    var x = net.H * i;
-                    var t = net.D * j;
-                    var error = Math.Abs(expected(x, t) - net.Get(i, j));
-                    if (error > result)
-                    {
-                        result = error;
-                    }
-                }
-            }
-            return result;
         }
     }
 }

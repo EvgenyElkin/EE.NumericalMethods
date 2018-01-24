@@ -1,6 +1,5 @@
 ﻿using System;
-using EE.NumericalMethods.Core.ExcerciseOne.Builders;
-using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
+using EE.NumericalMethods.Core.Common.Builders.MathNet2;
 using EE.NumericalMethods.Core.Helpers;
 
 namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
@@ -13,7 +12,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 
         public override string Name => "Неявный";
 
-        public override void Compute(IMathNet net)
+        public override void Compute(MathNet2 net)
         {
             for (var j = 1; j <= net.Height; j++)
             {
@@ -25,7 +24,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
             }
         }
 
-        public double[] ComputeTriagonalMatrix(IMathNet net, int j)
+        public double[] ComputeTriagonalMatrix(MathNet2 net, int j)
         {
             //Коэфиценты для построения матрицы
             double a, b, c;

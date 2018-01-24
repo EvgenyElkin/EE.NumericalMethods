@@ -1,4 +1,4 @@
-﻿using EE.NumericalMethods.Core.ExcerciseOne.Builders;
+﻿using EE.NumericalMethods.Core.Common.Builders.MathNet2;
 using Xunit;
 
 namespace EE.NumericalMethods.Tests.ExcerciseOne
@@ -12,7 +12,7 @@ namespace EE.NumericalMethods.Tests.ExcerciseOne
         public void Ctor_Success_TestCases(MathNetTestCase @case)
         {
             //Arrange and Act
-            var net = new MathNet(@case.MaxX, @case.MaxT, @case.H, @case.D);
+            var net = new MathNet2(@case.MaxX, @case.MaxT, @case.H, @case.D);
 
             Assert.Equal(@case.Widht, net.Width);
             Assert.Equal(@case.Height, net.Height);

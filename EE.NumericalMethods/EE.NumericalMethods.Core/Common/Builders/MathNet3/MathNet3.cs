@@ -1,8 +1,8 @@
-﻿using EE.NumericalMethods.Core.ExcerciseTwo.Interfaces;
+﻿using System;
 
-namespace EE.NumericalMethods.Core.ExcerciseTwo.Builders
+namespace EE.NumericalMethods.Core.Common.Builders.MathNet3
 {
-    public class MathNet3 : IMathNet3
+    public class MathNet3
     {
         /// <summary>
         /// Максимальное значение по пространству
@@ -85,6 +85,30 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Builders
             SizeY = (int)(maxY / h);
             Height = (int)(maxT / d);
             Net = new double[SizeX + 1, SizeY + 1, Height + 1];
+        }
+
+        /// <summary>
+        /// Функция вычисления ошибки
+        /// </summary>
+        /// <param name="expected">Реальное значение</param>
+        /// <returns></returns>
+        public double GetError(Func<double, double, double, double> expected)
+        {
+            var result = 0d;
+            for (var k = 0; k <= Height; k++)
+            for (var j = 0; j <= SizeY; j++)
+            for (var i = 0; i <= SizeX; i++)
+            {
+                var x = H * i;
+                var y = H * j;
+                var t = D * k;
+                var error = Math.Abs(expected(x, y, t) - Get(i, j, k));
+                if (error > result)
+                {
+                    result = error;
+                }
+            }
+            return result;
         }
     }
 }

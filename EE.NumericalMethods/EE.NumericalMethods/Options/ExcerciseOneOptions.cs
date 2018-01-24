@@ -8,7 +8,7 @@ namespace EE.NumericalMethods.Options
     /// Опции для запуска первого упражнения
     /// </summary>
     [Verb("ex-1", HelpText = "Задание 1: Решить уравнение теплопроводности")]
-    public class ExcerciseOneOptions : IExcerciseOneOptions
+    public class ExcerciseOneOptions
     {
         /// <summary>
         /// Выбор метода для запуска

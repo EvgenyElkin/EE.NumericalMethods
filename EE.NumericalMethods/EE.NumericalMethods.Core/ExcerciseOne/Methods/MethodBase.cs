@@ -1,10 +1,9 @@
 ﻿using System;
-using EE.NumericalMethods.Core.ExcerciseOne.Builders;
-using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
+using EE.NumericalMethods.Core.Common.Builders.MathNet2;
 
 namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
 {
-    public abstract class MethodBase : IMethod
+    public abstract class MethodBase
     {
         public abstract string Name { get; }
 
@@ -15,6 +14,6 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
             Function = function;
         }
 
-        public abstract void Compute(IMathNet net);
+        public abstract void Compute(MathNet2 net);
     }
 }

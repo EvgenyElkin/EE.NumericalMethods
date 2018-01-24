@@ -15,6 +15,10 @@
     "ex-2 Peaceman-Rachford": {
       "commandName": "Project",
       "commandLineArgs": "ex-2"
+    },
+    "ex-3 NonLinear": {
+      "commandName": "Project",
+      "commandLineArgs": "ex-3"
     }
   }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Net;
 using CommandLine;
 using EE.NumericalMethods.Core.Common;
 using EE.NumericalMethods.Core.ExcerciseOne;
+using EE.NumericalMethods.Core.ExcerciseThree;
 using EE.NumericalMethods.Core.ExcerciseTwo;
 using EE.NumericalMethods.Options;
 
@@ -15,25 +15,26 @@ namespace EE.NumericalMethods
         /// </summary>
         public static void Main(string[] args)
         {
-            try
-            {
+            //try
+            //{
                 //Разбор входных параметров и определения выполняемого блока
-                var experiment = Parser.Default.ParseArguments<ExcerciseOneOptions, ExcerciseTwoOptions>(args)
+                var experiment = Parser.Default.ParseArguments<ExcerciseOneOptions, ExcerciseTwoOptions, ExcerciseThreeOptions>(args)
                     .MapResult(
-                        (ExcerciseOneOptions opt) => new ExcerciseOneExperiment(opt),
-                        (ExcerciseTwoOptions opt) => new ExcerciseTwoExperiment(opt),
+                        (ExcerciseOneOptions opt) => new ExcerciseOneExperiment(opt.MethodType),
+                        (ExcerciseTwoOptions opt) => new ExcerciseTwoExperiment(),
+                        (ExcerciseThreeOptions opt) => new ExcerciseThreeExperiment(),
                         errors => (IExperiment)null);
 
                 //Запуск приложения
                 experiment?.Run();
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Произошла ошибка:");
-                Console.WriteLine(ex.Message);
-                Console.ResetColor();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.ForegroundColor = ConsoleColor.Red;
+            //    Console.WriteLine("Произошла ошибка:");
+            //    Console.WriteLine(ex.Message);
+            //    Console.ResetColor();
+            //}
             
             Console.WriteLine("Нажимите клавишу чтобы продолжить...");
             Console.ReadKey();

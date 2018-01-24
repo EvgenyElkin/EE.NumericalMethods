@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using EE.NumericalMethods.Core.ExcerciseOne.Builders;
+using EE.NumericalMethods.Core.Common.Builders.MathNet2;
 
 namespace EE.NumericalMethods.Core.ExcerciseOne.Interfaces
 {
@@ -53,6 +53,6 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Interfaces
         /// Сконструировать класс ответственный за запуск эксперементов
         /// </summary>
         /// <returns></returns>
-        IEnumerable<MathNet> Build();
+        IEnumerable<MathNet2> Build();
     }
 }

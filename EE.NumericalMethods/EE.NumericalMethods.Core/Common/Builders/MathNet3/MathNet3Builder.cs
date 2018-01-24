@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using EE.NumericalMethods.Core.ExcerciseTwo.Interfaces;
 
-namespace EE.NumericalMethods.Core.ExcerciseTwo.Builders
+namespace EE.NumericalMethods.Core.Common.Builders.MathNet3
 {
     /// <summary>
     /// Класс, позволяет сконструировать объект запускающий эксперименты
     /// Является ДКА с состояниями конструирования объекта
     /// </summary>
-    public class NetBuilder : IEmptyBuilder,
+    public class MathNet3Builder : IEmptyBuilder,
         IBuilderWithArea,
         IBuilderWithInitialCondition,
         ICompleteBuilder
     {
-        private NetBuilder()
+        private MathNet3Builder()
         { }
 
         private double _maxX;
@@ -26,7 +25,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Builders
 
         public static IEmptyBuilder Create()
         {
-            return new NetBuilder
+            return new MathNet3Builder
             {
                 _steps = new List<Tuple<double, double>>()
             };
@@ -59,7 +58,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Builders
             return this;
         }
 
-        public IEnumerable<IMathNet3> Build()
+        public IEnumerable<MathNet3> Build()
         {
             //Для каждого эксперимента создаем сетку
             foreach (var step in _steps)

@@ -1,11 +1,10 @@
 ﻿using System;
-using EE.NumericalMethods.Core.ExcerciseTwo.Interfaces;
+using EE.NumericalMethods.Core.Common.Builders.MathNet3;
 using EE.NumericalMethods.Core.Helpers;
-using IMethod = EE.NumericalMethods.Core.ExcerciseTwo.Interfaces.IMethod;
 
-namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
+namespace EE.NumericalMethods.Core.ExcerciseTwo
 {
-    public class PeacemanRachfordMethod : IMethod
+    public class PeacemanRachfordMethod
     {
         private readonly Func<double, double, double, double> _function;
 
@@ -16,7 +15,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
 
         public string Name => "Метод Писмена-Рекфорда(переменных направлений)";
 
-        public void Compute(IMathNet3 net)
+        public void Compute(MathNet3 net)
         {
             //Цикл по времени
             for (var k = 1; k <= net.Height; k++)
@@ -42,7 +41,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
             }
         }
 
-        private double[] ComputeColumn(IMathNet3 net, int i, int k)
+        private double[] ComputeColumn(MathNet3 net, int i, int k)
         {
             var dh2 = net.D / (net.H * net.H);
             var a = -dh2 / 2;
@@ -78,7 +77,7 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Methods
             return AlgoritmContext.Current.TridiagonalMatrixAlgoritm(matrix, values);
         }
 
-        private double[] ComputeRow(IMathNet3 net, int j, int k)
+        private double[] ComputeRow(MathNet3 net, int j, int k)
         {
             var dh2 = net.D / (net.H * net.H);
             var a = -dh2 / 2;

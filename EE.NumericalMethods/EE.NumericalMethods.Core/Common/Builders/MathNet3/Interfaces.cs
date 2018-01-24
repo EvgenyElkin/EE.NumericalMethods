@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EE.NumericalMethods.Core.ExcerciseTwo.Interfaces
+namespace EE.NumericalMethods.Core.Common.Builders.MathNet3
 {
     public interface IEmptyBuilder
     {
@@ -53,6 +53,6 @@ namespace EE.NumericalMethods.Core.ExcerciseTwo.Interfaces
         /// Сконструировать класс ответственный за запуск эксперементов
         /// </summary>
         /// <returns></returns>
-        IEnumerable<IMathNet3> Build();
+        IEnumerable<MathNet3> Build();
     }
 }

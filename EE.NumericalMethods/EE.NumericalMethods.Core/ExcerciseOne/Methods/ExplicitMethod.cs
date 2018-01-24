@@ -1,5 +1,5 @@
 ﻿using System;
-using EE.NumericalMethods.Core.ExcerciseOne.Builders;
+using EE.NumericalMethods.Core.Common.Builders.MathNet2;
 using EE.NumericalMethods.Core.ExcerciseOne.Interfaces;
 
 namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
@@ -12,7 +12,7 @@ namespace EE.NumericalMethods.Core.ExcerciseOne.Methods
         
         public override string Name => "Явный";
 
-        public override void Compute(IMathNet net)
+        public override void Compute(MathNet2 net)
         {
             for (var j = 1; j <= net.Height; j++)
             {
